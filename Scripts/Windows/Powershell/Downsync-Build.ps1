@@ -17,7 +17,11 @@ function Downsync-Build {
     # Fetch installed version from a local file if a path has been provided;
     #  otherwise there is no version identifier available
     if ($InstalledVersionLocation) {
-        $InstalledVersion = (Get-Content -Path $InstalledVersionLocation -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop | Select-Object -First 1 -ErrorAction Stop).version
+        try {
+            $InstalledVersion = (Get-Content -Path $InstalledVersionLocation -ErrorAction Stop | ConvertFrom-Json -ErrorAction Stop | Select-Object -First 1 -ErrorAction Stop).version
+        } catch [System.Management.Automation.ItemNotFoundException] {
+            $InstalledVersion = $null
+        }
     } else {
         $InstalledVersion = $null
     }

@@ -223,7 +223,7 @@ Describe 'Downsync-Build' {
 
 	It "Performs downsync successfully when no InstalledVersionLocation is specified" {
 
-		Mock Get-Content { throw "Cannot read contents of file" }
+		Mock Get-Content { throw "Should not attempt to read contents of file" }
 
 		Mock Test-Path -ParameterFilter { $Path -and ($Path -eq "BuildFolder") } { $false }
 
@@ -249,5 +249,35 @@ Describe 'Downsync-Build' {
 		Assert-MockCalled -Times 1 Resolve-Path
 		Assert-MockCalled -Times 1 Start-Process
 		Assert-MockCalled -Times 0 Out-File
+	}
+
+	It "Performs downsync successfully when specifying InstalledVersionLocation but there is no version file present yet" {
+
+		Mock Get-Content { throw New-Object System.Management.Automation.ItemNotFoundException }
+
+		Mock Test-Path -ParameterFilter { $Path -and ($Path -eq "BuildFolder") } { $false }
+
+		Mock Test-Path -ParameterFilter { $Path -and ($Path -eq "CacheFolder") } { $false }
+
+		Mock Remove-Item { }
+
+		Mock New-Item { }
+
+		Mock Resolve-Path { }
+
+		Mock Start-Process { @{ ExitCode = 0 }}
+
+		Mock Out-File { }
+
+		{ Downsync-Build -BuildLocation "BuildFolder" -CloudStorageLocation "gs://storage-bucket/folder" -BuildVersion "1235" -CacheLocation "CacheFolder" -InstalledVersionLocation "installed-version.json" } |
+			Should -Not -Throw
+
+		Assert-MockCalled -Times 1 Get-Content
+		Assert-MockCalled -Times 3 Test-Path
+		Assert-MockCalled -Times 0 Remove-Item
+		Assert-MockCalled -Times 2 New-Item
+		Assert-MockCalled -Times 1 Resolve-Path
+		Assert-MockCalled -Times 1 Start-Process
+		Assert-MockCalled -Times 1 Out-File
 	}
 }
