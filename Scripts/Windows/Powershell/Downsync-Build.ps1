@@ -67,16 +67,21 @@ function Downsync-Build {
             $CacheLocation
         )
 
+        Write-Host "Beginning Longtail process"
         # Update local build version using Longtail
         $Process = Start-Process -FilePath $LongtailLocation -ArgumentList $Arguments -NoNewWindow -Wait -PassThru
+        Write-Host "Completed Longtail process"
 
         if ($Process.ExitCode -ne 0) {
             throw [LongtailException]::new($Process.ExitCode)
         }
+        Write-Host "Exit code validated"
 
         # Update installed version identifier, if a path has been provided
         if ($InstalledVersionLocation) {
+            Write-Host "UPdating InstalledVersionLocation"
             @{ "version" = $InstalledVersion } | ConvertTo-Json -ErrorAction Stop | Out-File -FilePath $InstalledVersionLocation -ErrorAction Stop
         }
+        Write-Host "Downsync-Build done"
     }
 }

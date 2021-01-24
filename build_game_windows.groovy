@@ -49,8 +49,12 @@ spec:
     effect: NoSchedule
 
   # Use root uid for volumes
+  # However, due to long mount times for Windows we use different settings as documented
+  #  in https://github.com/jenkinsci/helm-charts/tree/main/charts/jenkins#long-volume-attachmount-times
   securityContext:
-    fsGroup: 1000
+    runAsNonRoot: true
+    runAsUser: 1000
+    supplementalGroups: [1000]
 
   containers:
 
