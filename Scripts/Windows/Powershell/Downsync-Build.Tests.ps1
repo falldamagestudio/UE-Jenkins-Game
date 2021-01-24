@@ -29,13 +29,13 @@ Describe 'Downsync-Build' {
 		{ Downsync-Build -BuildLocation "BuildFolder" -CloudStorageLocation "gs://storage-bucket/folder" -BuildVersion "1234" -CacheLocation "CacheFolder" -InstalledVersionLocation "installed-version.json" } |
 			Should -Not -Throw
 
-		Assert-MockCalled -Times 1 Get-Content
-		Assert-MockCalled -Times 0 Test-Path
-		Assert-MockCalled -Times 0 Remove-Item
-		Assert-MockCalled -Times 0 New-Item
-		Assert-MockCalled -Times 0 Resolve-Path
-		Assert-MockCalled -Times 0 Start-Process
-		Assert-MockCalled -Times 0 Out-File
+		Should -Invoke -Times 1 -Exactly Get-Content
+		Should -Invoke -Times 0 -Exactly Test-Path
+		Should -Invoke -Times 0 -Exactly Remove-Item
+		Should -Invoke -Times 0 -Exactly New-Item
+		Should -Invoke -Times 0 -Exactly Resolve-Path
+		Should -Invoke -Times 0 -Exactly Start-Process
+		Should -Invoke -Times 0 -Exactly Out-File
 	}
 
 	It "Reports error if build folder cannot be created" {
@@ -61,13 +61,13 @@ Describe 'Downsync-Build' {
 		{ Downsync-Build -BuildLocation "BuildFolder" -CloudStorageLocation "gs://storage-bucket/folder" -BuildVersion "1235" -CacheLocation "CacheFolder" -InstalledVersionLocation "installed-version.json" } |
 			Should -Throw "Cannot create build folder"
 
-		Assert-MockCalled -Times 1 Get-Content
-		Assert-MockCalled -Times 2 Test-Path
-		Assert-MockCalled -Times 0 Remove-Item
-		Assert-MockCalled -Times 1 New-Item
-		Assert-MockCalled -Times 0 Resolve-Path
-		Assert-MockCalled -Times 0 Start-Process
-		Assert-MockCalled -Times 0 Out-File
+		Should -Invoke -Times 1 -Exactly Get-Content
+		Should -Invoke -Times 2 -Exactly Test-Path
+		Should -Invoke -Times 0 -Exactly Remove-Item
+		Should -Invoke -Times 1 -Exactly New-Item
+		Should -Invoke -Times 0 -Exactly Resolve-Path
+		Should -Invoke -Times 0 -Exactly Start-Process
+		Should -Invoke -Times 0 -Exactly Out-File
 	}
 
 	It "Reports error if cache folder cannot be created" {
@@ -92,13 +92,13 @@ Describe 'Downsync-Build' {
 		{ Downsync-Build -BuildLocation "BuildFolder" -CloudStorageLocation "gs://storage-bucket/folder" -BuildVersion "1235" -CacheLocation "CacheFolder" -InstalledVersionLocation "installed-version.json" } |
 			Should -Throw "Cannot create cache folder"
 
-		Assert-MockCalled -Times 1 Get-Content
-		Assert-MockCalled -Times 3 Test-Path
-		Assert-MockCalled -Times 0 Remove-Item
-		Assert-MockCalled -Times 2 New-Item
-		Assert-MockCalled -Times 0 Resolve-Path
-		Assert-MockCalled -Times 0 Start-Process
-		Assert-MockCalled -Times 0 Out-File
+		Should -Invoke -Times 1 -Exactly Get-Content
+		Should -Invoke -Times 3 -Exactly Test-Path
+		Should -Invoke -Times 0 -Exactly Remove-Item
+		Should -Invoke -Times 2 -Exactly New-Item
+		Should -Invoke -Times 0 -Exactly Resolve-Path
+		Should -Invoke -Times 0 -Exactly Start-Process
+		Should -Invoke -Times 0 -Exactly Out-File
 	}
 
 	It "Reports error if path cannot be resolved" {
@@ -122,13 +122,13 @@ Describe 'Downsync-Build' {
 		{ Downsync-Build -BuildLocation "BuildFolder" -CloudStorageLocation "gs://storage-bucket/folder" -BuildVersion "1235" -CacheLocation "CacheFolder" -InstalledVersionLocation "installed-version.json" } |
 			Should -Throw "Path cannot be resolved"
 
-		Assert-MockCalled -Times 1 Get-Content
-		Assert-MockCalled -Times 3 Test-Path
-		Assert-MockCalled -Times 0 Remove-Item
-		Assert-MockCalled -Times 2 New-Item
-		Assert-MockCalled -Times 1 Resolve-Path
-		Assert-MockCalled -Times 0 Start-Process
-		Assert-MockCalled -Times 0 Out-File
+		Should -Invoke -Times 1 -Exactly Get-Content
+		Should -Invoke -Times 3 -Exactly Test-Path
+		Should -Invoke -Times 0 -Exactly Remove-Item
+		Should -Invoke -Times 2 -Exactly New-Item
+		Should -Invoke -Times 1 -Exactly Resolve-Path
+		Should -Invoke -Times 0 -Exactly Start-Process
+		Should -Invoke -Times 0 -Exactly Out-File
 	}
 
 	It "Reports error if Longtail executable returns a nonzero status" {
@@ -152,13 +152,13 @@ Describe 'Downsync-Build' {
 		{ Downsync-Build -BuildLocation "BuildFolder" -CloudStorageLocation "gs://storage-bucket/folder" -BuildVersion "1235" -CacheLocation "CacheFolder" -InstalledVersionLocation "installed-version.json" } |
 			Should -Throw
 
-		Assert-MockCalled -Times 1 Get-Content
-		Assert-MockCalled -Times 3 Test-Path
-		Assert-MockCalled -Times 0 Remove-Item
-		Assert-MockCalled -Times 2 New-Item
-		Assert-MockCalled -Times 1 Resolve-Path
-		Assert-MockCalled -Times 1 Start-Process
-		Assert-MockCalled -Times 0 Out-File
+		Should -Invoke -Times 1 -Exactly Get-Content
+		Should -Invoke -Times 3 -Exactly Test-Path
+		Should -Invoke -Times 0 -Exactly Remove-Item
+		Should -Invoke -Times 2 -Exactly New-Item
+		Should -Invoke -Times 1 -Exactly Resolve-Path
+		Should -Invoke -Times 1 -Exactly Start-Process
+		Should -Invoke -Times 0 -Exactly Out-File
 	}
 
 	It "Reports error if installed version number cannot be updated" {
@@ -182,13 +182,13 @@ Describe 'Downsync-Build' {
 		{ Downsync-Build -BuildLocation "BuildFolder" -CloudStorageLocation "gs://storage-bucket/folder" -BuildVersion "1235" -CacheLocation "CacheFolder" -InstalledVersionLocation "installed-version.json" } |
 			Should -Throw "Cannot write updated version number"
 
-		Assert-MockCalled -Times 1 Get-Content
-		Assert-MockCalled -Times 3 Test-Path
-		Assert-MockCalled -Times 0 Remove-Item
-		Assert-MockCalled -Times 2 New-Item
-		Assert-MockCalled -Times 1 Resolve-Path
-		Assert-MockCalled -Times 1 Start-Process
-		Assert-MockCalled -Times 1 Out-File
+		Should -Invoke -Times 1 -Exactly Get-Content
+		Should -Invoke -Times 3 -Exactly Test-Path
+		Should -Invoke -Times 0 -Exactly Remove-Item
+		Should -Invoke -Times 2 -Exactly New-Item
+		Should -Invoke -Times 1 -Exactly Resolve-Path
+		Should -Invoke -Times 1 -Exactly Start-Process
+		Should -Invoke -Times 1 -Exactly Out-File
 	}
 
 	It "Reports success if the entire operation goes according to plan" {
@@ -212,13 +212,13 @@ Describe 'Downsync-Build' {
 		{ Downsync-Build -BuildLocation "BuildFolder" -CloudStorageLocation "gs://storage-bucket/folder" -BuildVersion "1235" -CacheLocation "CacheFolder" -InstalledVersionLocation "installed-version.json" } |
 			Should -Not -Throw
 
-		Assert-MockCalled -Times 1 Get-Content
-		Assert-MockCalled -Times 3 Test-Path
-		Assert-MockCalled -Times 0 Remove-Item
-		Assert-MockCalled -Times 2 New-Item
-		Assert-MockCalled -Times 1 Resolve-Path
-		Assert-MockCalled -Times 1 Start-Process
-		Assert-MockCalled -Times 1 Out-File
+		Should -Invoke -Times 1 -Exactly Get-Content
+		Should -Invoke -Times 3 -Exactly Test-Path
+		Should -Invoke -Times 0 -Exactly Remove-Item
+		Should -Invoke -Times 2 -Exactly New-Item
+		Should -Invoke -Times 1 -Exactly Resolve-Path
+		Should -Invoke -Times 1 -Exactly Start-Process
+		Should -Invoke -Times 1 -Exactly Out-File
 	}
 
 	It "Performs downsync successfully when no InstalledVersionLocation is specified" {
@@ -242,13 +242,13 @@ Describe 'Downsync-Build' {
 		{ Downsync-Build -BuildLocation "BuildFolder" -CloudStorageLocation "gs://storage-bucket/folder" -BuildVersion "1235" -CacheLocation "CacheFolder" } |
 			Should -Not -Throw
 
-		Assert-MockCalled -Times 0 Get-Content
-		Assert-MockCalled -Times 3 Test-Path
-		Assert-MockCalled -Times 0 Remove-Item
-		Assert-MockCalled -Times 2 New-Item
-		Assert-MockCalled -Times 1 Resolve-Path
-		Assert-MockCalled -Times 1 Start-Process
-		Assert-MockCalled -Times 0 Out-File
+		Should -Invoke -Times 0 -Exactly Get-Content
+		Should -Invoke -Times 3 -Exactly Test-Path
+		Should -Invoke -Times 0 -Exactly Remove-Item
+		Should -Invoke -Times 2 -Exactly New-Item
+		Should -Invoke -Times 1 -Exactly Resolve-Path
+		Should -Invoke -Times 1 -Exactly Start-Process
+		Should -Invoke -Times 0 -Exactly Out-File
 	}
 
 	It "Performs downsync successfully when specifying InstalledVersionLocation but there is no version file present yet" {
@@ -272,12 +272,12 @@ Describe 'Downsync-Build' {
 		{ Downsync-Build -BuildLocation "BuildFolder" -CloudStorageLocation "gs://storage-bucket/folder" -BuildVersion "1235" -CacheLocation "CacheFolder" -InstalledVersionLocation "installed-version.json" } |
 			Should -Not -Throw
 
-		Assert-MockCalled -Times 1 Get-Content
-		Assert-MockCalled -Times 3 Test-Path
-		Assert-MockCalled -Times 0 Remove-Item
-		Assert-MockCalled -Times 2 New-Item
-		Assert-MockCalled -Times 1 Resolve-Path
-		Assert-MockCalled -Times 1 Start-Process
-		Assert-MockCalled -Times 1 Out-File
+		Should -Invoke -Times 1 -Exactly Get-Content
+		Should -Invoke -Times 3 -Exactly Test-Path
+		Should -Invoke -Times 0 -Exactly Remove-Item
+		Should -Invoke -Times 2 -Exactly New-Item
+		Should -Invoke -Times 1 -Exactly Resolve-Path
+		Should -Invoke -Times 1 -Exactly Start-Process
+		Should -Invoke -Times 1 -Exactly Out-File 
 	}
 }
