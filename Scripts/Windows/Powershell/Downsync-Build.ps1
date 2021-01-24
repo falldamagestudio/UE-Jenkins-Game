@@ -80,7 +80,7 @@ function Downsync-Build {
         # Update installed version identifier, if a path has been provided
         if ($InstalledVersionLocation) {
             Write-Host "UPdating InstalledVersionLocation"
-            @{ "version" = $InstalledVersion } | ConvertTo-Json -ErrorAction Stop | Out-File -FilePath $InstalledVersionLocation -ErrorAction Stop
+            @{ "version" = $BuildVersion } | ConvertTo-Json -ErrorAction Stop | Out-File -FilePath $InstalledVersionLocation -ErrorAction Stop
         }
         Write-Host "Downsync-Build done"
     }
