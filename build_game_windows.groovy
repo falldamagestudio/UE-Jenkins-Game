@@ -81,7 +81,14 @@ spec:
     stage('Update UE') {
       steps {
         container('ue-jenkins-buildtools-windows') {
-          powershell "& .\\Scripts\\Windows\\Powershell\\UpdateUE.ps1 -CloudStorageBuckt ${LONGTAIL_STORE_BUCKET_NAME}"
+          powershell """
+            try {
+              & .\\Scripts\\Windows\\Powershell\\UpdateUE.ps1 -CloudStorageBucket ${LONGTAIL_STORE_BUCKET_NAME}
+            } catch {
+              Write-Error \$_
+              exit 1
+            }
+          """
         }
       }
     }
