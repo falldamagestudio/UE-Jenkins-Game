@@ -1,0 +1,26 @@
+# Ignore generated files that are part of the game project
+
+/ExampleGame/Binaries
+/ExampleGame/Build
+/ExampleGame/Saved
+/ExampleGame/Intermediate
+/ExampleGame/DerivedDataCache
+/ExampleGame/LocalDerivedDataCache
+
+# Ignore pre-built UE version
+
+/UE
+
+# Ignore Longtail cache folder
+
+/LongtailCache
+
+# Ignore file which contains locally-installed engine version
+
+/installed-engine-version-win64.json
+
+# Ignore Visual Studio files/folders
+
+*\.vs*
+*.sln
+
