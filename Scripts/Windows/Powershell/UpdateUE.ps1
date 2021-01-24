@@ -13,4 +13,4 @@ $CloudStorageLocation = "gs://${CloudStorageBucket}/engine-win64"
 $LongtailCacheLocation = "${PSScriptRoot}\..\..\..\LongtailCache"
 $InstalledVersionLocation = "${PSScriptRoot}\..\..\..\installed-engine-version-win64.json"
 
-Downsync-Build -BuildLocation $UELocation -CloudStorageLocation $CloudStorageLocation -BuildVersion $EngineBuildId -CacheLocation $LongtailCacheLocation -InstalledVersionLocation $InstalledVersionLocation
+Downsync-Build -BuildLocation $UELocation -CloudStorageLocation $CloudStorageLocation -BuildVersion $BuildVersion -CacheLocation $LongtailCacheLocation -InstalledVersionLocation $InstalledVersionLocation
