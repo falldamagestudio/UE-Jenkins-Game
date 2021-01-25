@@ -60,15 +60,6 @@ spec:
     #  (or else building UE software will run into the 248/260 char path limits)
     workingDir: C:\\J
 
-  - name: hhh-dotnetframework-container
-    image: mcr.microsoft.com/dotnet/framework/runtime:3.5
-    # Add dummy command to prevent container from immediately exiting upon launch
-    command:
-    - powershell
-    args:
-    - Start-Sleep
-      999999
-
   - name: ue-jenkins-buildtools-windows
     image: ${UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE}
     # Add dummy command to prevent container from immediately exiting upon launch
