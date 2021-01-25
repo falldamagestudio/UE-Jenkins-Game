@@ -89,5 +89,20 @@ spec:
       }
     }
     
+    stage('Build game') {
+      steps {
+        container('ue-jenkins-buildtools-windows') {
+          powershell """
+            try {
+              & .\\Scripts\\Windows\\Powershell\\BuildGame.ps1 BuildGame -ProjectLocation ExampleGame\\ExampleGame.uproject -TargetPlatform Win64 -Configuration Development -Target ExampleGame -ArchiveDir LocallyBuiltGame
+            } catch {
+              Write-Error \$_
+              exit 1
+            }
+          """
+        }
+      }
+    }
+
   }
 }

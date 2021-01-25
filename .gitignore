@@ -19,6 +19,10 @@
 
 /installed-engine-version-win64.json
 
+# Ignore build output from BuildGame script
+
+/LocallyBuiltGame
+
 # Ignore Visual Studio files/folders
 
 *\.vs*
