@@ -94,7 +94,7 @@ spec:
         container('ue-jenkins-buildtools-windows') {
           powershell """
             try {
-              & .\\Scripts\\Windows\\BuildSteps\\BuildGame.ps1 BuildGame -ProjectLocation ExampleGame\\ExampleGame.uproject -TargetPlatform Win64 -Configuration Development -Target ExampleGame -ArchiveDir LocallyBuiltGame
+              & .\\Scripts\\Windows\\BuildSteps\\BuildGame.ps1 -ProjectLocation ExampleGame\\ExampleGame.uproject -TargetPlatform Win64 -Configuration Development -Target ExampleGame -ArchiveDir LocallyBuiltGame
             } catch {
               Write-Error \$_
               exit 1
