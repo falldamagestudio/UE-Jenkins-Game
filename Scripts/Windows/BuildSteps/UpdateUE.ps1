@@ -2,7 +2,7 @@ param (
 	[Parameter(Mandatory)] [string] $CloudStorageBucket
 )
 
-. $PSScriptRoot\Downsync-Build.ps1
+. $PSScriptRoot\..\Powershell\Downsync-Build.ps1
 
 $DesiredVersionLocation = "${PSScriptRoot}\..\..\..\desired-engine-version-win64.json"
 

@@ -79,7 +79,7 @@ spec:
         container('ue-jenkins-buildtools-windows') {
           powershell """
             try {
-              & .\\Scripts\\Windows\\Powershell\\UpdateUE.ps1 -CloudStorageBucket ${LONGTAIL_STORE_BUCKET_NAME}
+              & .\\Scripts\\Windows\\BuildSteps\\UpdateUE.ps1 -CloudStorageBucket ${LONGTAIL_STORE_BUCKET_NAME}
             } catch {
               Write-Error \$_
               exit 1
@@ -94,7 +94,7 @@ spec:
         container('ue-jenkins-buildtools-windows') {
           powershell """
             try {
-              & .\\Scripts\\Windows\\Powershell\\BuildGame.ps1 BuildGame -ProjectLocation ExampleGame\\ExampleGame.uproject -TargetPlatform Win64 -Configuration Development -Target ExampleGame -ArchiveDir LocallyBuiltGame
+              & .\\Scripts\\Windows\\BuildSteps\\BuildGame.ps1 BuildGame -ProjectLocation ExampleGame\\ExampleGame.uproject -TargetPlatform Win64 -Configuration Development -Target ExampleGame -ArchiveDir LocallyBuiltGame
             } catch {
               Write-Error \$_
               exit 1
