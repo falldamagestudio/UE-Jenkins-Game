@@ -53,20 +53,6 @@ spec:
       secret:
         secretName: plastic-config
 
-  mounts:
-    - name: plastic-config
-      mountPath: C:/Users/jenkins/AppData/Local/plastic4/client.conf
-      subPath: client.conf
-      readOnly: true
-    - name: plastic-config
-      mountPath: C:/Users/jenkins/AppData/Local/plastic4/cryptedservers.conf
-      subPath: cryptedservers.conf
-      readOnly: true
-    - name: plastic-config
-      mountPath: C:/Users/jenkins/AppData/Local/plastic4/cryptedserver.key
-      subPath: cryptedserver.key
-      readOnly: true
-
   containers:
 
   - name: jnlp
@@ -78,6 +64,20 @@ spec:
     #  -- and this path should be less than 50 characters in total on Windows
     #  (or else building UE software will run into the 248/260 char path limits)
     workingDir: C:\\J
+
+    volumeMounts:
+      - name: plastic-config
+        mountPath: C:/Users/jenkins/AppData/Local/plastic4/client.conf
+        subPath: client.conf
+        readOnly: true
+      - name: plastic-config
+        mountPath: C:/Users/jenkins/AppData/Local/plastic4/cryptedservers.conf
+        subPath: cryptedservers.conf
+        readOnly: true
+      - name: plastic-config
+        mountPath: C:/Users/jenkins/AppData/Local/plastic4/cryptedserver.key
+        subPath: cryptedserver.key
+        readOnly: true
 
   - name: ue-jenkins-buildtools-windows
     image: ${UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE}
