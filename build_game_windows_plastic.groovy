@@ -48,6 +48,25 @@ spec:
     value: "windows"
     effect: NoSchedule
 
+  volumes:
+    - name: plastic-config
+      secret:
+        secretName: plastic-config
+
+  mounts:
+    - name: plastic-config
+      mountPath: C:/Users/jenkins/AppData/Local/plastic4/client.conf
+      subPath: client.conf
+      readOnly: true
+    - name: plastic-config
+      mountPath: C:/Users/jenkins/AppData/Local/plastic4/cryptedservers.conf
+      subPath: cryptedservers.conf
+      readOnly: true
+    - name: plastic-config
+      mountPath: C:/Users/jenkins/AppData/Local/plastic4/cryptedserver.key
+      subPath: cryptedserver.key
+      readOnly: true
+
   containers:
 
   - name: jnlp
