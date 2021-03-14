@@ -67,16 +67,7 @@ spec:
 
     volumeMounts:
       - name: plastic-config
-        mountPath: C:/Users/jenkins/AppData/Local/plastic4/client.conf
-        subPath: client.conf
-        readOnly: true
-      - name: plastic-config
-        mountPath: C:/Users/jenkins/AppData/Local/plastic4/cryptedservers.conf
-        subPath: cryptedservers.conf
-        readOnly: true
-      - name: plastic-config
-        mountPath: C:/Users/jenkins/AppData/Local/plastic4/cryptedserver.key
-        subPath: cryptedserver.key
+        mountPath: C:/Users/jenkins/AppData/Local/plastic4
         readOnly: true
 
   - name: ue-jenkins-buildtools-windows
