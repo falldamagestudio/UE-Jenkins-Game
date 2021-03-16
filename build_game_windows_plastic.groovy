@@ -68,7 +68,7 @@ spec:
     volumeMounts:
       - name: plastic-config
         mountPath: C:/Users/jenkins/AppData/Local/plastic4
-        readOnly: true
+        readOnly: false
 
   - name: ue-jenkins-buildtools-windows
     image: ${UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE}
