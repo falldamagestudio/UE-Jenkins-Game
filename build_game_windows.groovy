@@ -8,10 +8,11 @@ pipeline {
 	    // It enables incremental builds.
       workspaceVolume persistentVolumeClaimWorkspaceVolume(claimName: 'build-game-windows', readOnly: false)
 
-      // Provisioning a new Windows node, fetching the Windows Server Core base image,
-      //  and the MSVC build tools layers can take a long time.
-      // Allow for up to 30 minutes for this process to complete.
-      slaveConnectTimeout 1800
+      // Provisioning a new Windows node, fetching the Jenkins Agent image,
+      //  fetching the MSVC build tools image, and starting the Jenkins agent is significantly slower
+      //  than on Linux due to a number of factors.
+      // Allow for this process to take a long time.
+      slaveConnectTimeout 3600
 
       // Jenkins considers a computer/node/executor to be idle during the period between creating the Pod,
       //  and the image pulls completing. We raise the idle timeout to be higher than the typical image pull time.
@@ -20,7 +21,7 @@ pipeline {
       //  the job gets stuck in a bad cycle, sometimes for arbitrarily long (8+ hours).
       // See https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/22
       //  and https://issues.jenkins.io/browse/JENKINS-65249 for discussion.
-      idleMinutes 30
+      idleMinutes 60
 
       yaml """
 metadata:
