@@ -13,6 +13,15 @@ pipeline {
       // Allow for up to 30 minutes for this process to complete.
       slaveConnectTimeout 1800
 
+      // Jenkins considers a computer/node/executor to be idle during the period between creating the Pod,
+      //  and the image pulls completing. We raise the idle timeout to be higher than the typical image pull time.
+      // Otherwise, Jenkins kills/recreates the pod several times, the GKE autoscaler spins up extra nodes
+      //  in response, GKE fails to attach PVCs in read-write mode to multiple nodes at the same time,
+      //  the job gets stuck in a bad cycle, sometimes for arbitrarily long (8+ hours).
+      // See https://github.com/falldamagestudio/UE-Jenkins-BuildSystem/issues/22
+      //  and https://issues.jenkins.io/browse/JENKINS-65249 for discussion.
+      idleMinutes 30
+
       yaml """
 metadata:
   labels:
