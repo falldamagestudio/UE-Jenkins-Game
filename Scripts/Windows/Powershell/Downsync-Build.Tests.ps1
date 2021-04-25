@@ -3,6 +3,7 @@
 BeforeAll {
 
 	. ${PSScriptRoot}\Downsync-Build.ps1
+	. ${PSScriptRoot}\Invoke-External.ps1
 
 }
 
@@ -22,7 +23,7 @@ Describe 'Downsync-Build' {
 
 		Mock Resolve-Path { }
 
-		Mock Start-Process { }
+		Mock Invoke-External { throw "Invoke-External should not be called" }
 
 		Mock Out-File { }
 
@@ -34,7 +35,7 @@ Describe 'Downsync-Build' {
 		Should -Invoke -Times 0 -Exactly Remove-Item
 		Should -Invoke -Times 0 -Exactly New-Item
 		Should -Invoke -Times 0 -Exactly Resolve-Path
-		Should -Invoke -Times 0 -Exactly Start-Process
+		Should -Invoke -Times 0 -Exactly Invoke-External
 		Should -Invoke -Times 0 -Exactly Out-File
 	}
 
@@ -54,7 +55,7 @@ Describe 'Downsync-Build' {
 
 		Mock Resolve-Path { }
 
-		Mock Start-Process { }
+		Mock Invoke-External { throw "Invoke-External should not be called" }
 
 		Mock Out-File { }
 
@@ -66,7 +67,7 @@ Describe 'Downsync-Build' {
 		Should -Invoke -Times 0 -Exactly Remove-Item
 		Should -Invoke -Times 1 -Exactly New-Item
 		Should -Invoke -Times 0 -Exactly Resolve-Path
-		Should -Invoke -Times 0 -Exactly Start-Process
+		Should -Invoke -Times 0 -Exactly Invoke-External
 		Should -Invoke -Times 0 -Exactly Out-File
 	}
 
@@ -85,7 +86,7 @@ Describe 'Downsync-Build' {
 
 		Mock Resolve-Path { }
 
-		Mock Start-Process { }
+		Mock Invoke-External { throw "Invoke-External should not be called" }
 
 		Mock Out-File { }
 
@@ -97,7 +98,7 @@ Describe 'Downsync-Build' {
 		Should -Invoke -Times 0 -Exactly Remove-Item
 		Should -Invoke -Times 2 -Exactly New-Item
 		Should -Invoke -Times 0 -Exactly Resolve-Path
-		Should -Invoke -Times 0 -Exactly Start-Process
+		Should -Invoke -Times 0 -Exactly Invoke-External
 		Should -Invoke -Times 0 -Exactly Out-File
 	}
 
@@ -115,7 +116,7 @@ Describe 'Downsync-Build' {
 
 		Mock Resolve-Path { throw "Path cannot be resolved" }
 
-		Mock Start-Process { }
+		Mock Invoke-External { throw "Invoke-External should not be called" }
 
 		Mock Out-File { }
 
@@ -127,7 +128,7 @@ Describe 'Downsync-Build' {
 		Should -Invoke -Times 0 -Exactly Remove-Item
 		Should -Invoke -Times 2 -Exactly New-Item
 		Should -Invoke -Times 1 -Exactly Resolve-Path
-		Should -Invoke -Times 0 -Exactly Start-Process
+		Should -Invoke -Times 0 -Exactly Invoke-External
 		Should -Invoke -Times 0 -Exactly Out-File
 	}
 
@@ -145,7 +146,7 @@ Describe 'Downsync-Build' {
 
 		Mock Resolve-Path { }
 
-		Mock Start-Process { @{ ExitCode = 1234 }}
+		Mock Invoke-External { 1234 }
 
 		Mock Out-File { }
 
@@ -157,7 +158,7 @@ Describe 'Downsync-Build' {
 		Should -Invoke -Times 0 -Exactly Remove-Item
 		Should -Invoke -Times 2 -Exactly New-Item
 		Should -Invoke -Times 1 -Exactly Resolve-Path
-		Should -Invoke -Times 1 -Exactly Start-Process
+		Should -Invoke -Times 1 -Exactly Invoke-External
 		Should -Invoke -Times 0 -Exactly Out-File
 	}
 
@@ -175,7 +176,7 @@ Describe 'Downsync-Build' {
 
 		Mock Resolve-Path { }
 
-		Mock Start-Process { @{ ExitCode = 0 }}
+		Mock Invoke-External { 0 }
 
 		Mock Out-File { throw "Cannot write updated version number" }
 
@@ -187,7 +188,7 @@ Describe 'Downsync-Build' {
 		Should -Invoke -Times 0 -Exactly Remove-Item
 		Should -Invoke -Times 2 -Exactly New-Item
 		Should -Invoke -Times 1 -Exactly Resolve-Path
-		Should -Invoke -Times 1 -Exactly Start-Process
+		Should -Invoke -Times 1 -Exactly Invoke-External
 		Should -Invoke -Times 1 -Exactly Out-File
 	}
 
@@ -205,7 +206,7 @@ Describe 'Downsync-Build' {
 
 		Mock Resolve-Path { }
 
-		Mock Start-Process { @{ ExitCode = 0 }}
+		Mock Invoke-External { 0 }
 
 		Mock Out-File { }
 
@@ -217,7 +218,7 @@ Describe 'Downsync-Build' {
 		Should -Invoke -Times 0 -Exactly Remove-Item
 		Should -Invoke -Times 2 -Exactly New-Item
 		Should -Invoke -Times 1 -Exactly Resolve-Path
-		Should -Invoke -Times 1 -Exactly Start-Process
+		Should -Invoke -Times 1 -Exactly Invoke-External
 		Should -Invoke -Times 1 -Exactly Out-File
 	}
 
@@ -235,7 +236,7 @@ Describe 'Downsync-Build' {
 
 		Mock Resolve-Path { }
 
-		Mock Start-Process { @{ ExitCode = 0 }}
+		Mock Invoke-External { 0 }
 
 		Mock Out-File { }
 
@@ -247,7 +248,7 @@ Describe 'Downsync-Build' {
 		Should -Invoke -Times 0 -Exactly Remove-Item
 		Should -Invoke -Times 2 -Exactly New-Item
 		Should -Invoke -Times 1 -Exactly Resolve-Path
-		Should -Invoke -Times 1 -Exactly Start-Process
+		Should -Invoke -Times 1 -Exactly Invoke-External
 		Should -Invoke -Times 0 -Exactly Out-File
 	}
 
@@ -265,7 +266,7 @@ Describe 'Downsync-Build' {
 
 		Mock Resolve-Path { }
 
-		Mock Start-Process { @{ ExitCode = 0 }}
+		Mock Invoke-External { 0 }
 
 		Mock Out-File { }
 
@@ -277,7 +278,7 @@ Describe 'Downsync-Build' {
 		Should -Invoke -Times 0 -Exactly Remove-Item
 		Should -Invoke -Times 2 -Exactly New-Item
 		Should -Invoke -Times 1 -Exactly Resolve-Path
-		Should -Invoke -Times 1 -Exactly Start-Process
+		Should -Invoke -Times 1 -Exactly Invoke-External
 		Should -Invoke -Times 1 -Exactly Out-File 
 	}
 }
