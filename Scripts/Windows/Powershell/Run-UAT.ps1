@@ -1,5 +1,5 @@
 . ${PSScriptRoot}\Get-EngineLocationForProject.ps1
-. ${PSScriptRoot}\Invoke-External.ps1
+. ${PSScriptRoot}\Invoke-External-PrintStdout.ps1
 
 class UATException : Exception {
 	$ExitCode
@@ -20,7 +20,7 @@ function Run-UAT {
 	
 	$RunUATArguments = $Arguments | Where { $_ -ne $null }
 
-	$ExitCode = Invoke-External -LiteralPath $RunUATLocation -ArgumentList $RunUATArguments
+	$ExitCode = Invoke-External-PrintStdout -LiteralPath $RunUATLocation -ArgumentList $RunUATArguments
 	
 	if ($ExitCode -ne 0) {
 		throw [UATException]::new($ExitCode)

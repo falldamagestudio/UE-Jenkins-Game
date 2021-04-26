@@ -1,4 +1,4 @@
-. ${PSScriptRoot}\Invoke-External.ps1
+. ${PSScriptRoot}\Invoke-External-PrintStdout.ps1
 
 class LongtailException : Exception {
 	$ExitCode
@@ -71,7 +71,7 @@ function Downsync-Build {
 
         Write-Host "Beginning Longtail process"
         # Update local build version using Longtail
-        $ExitCode = Invoke-External -LiteralPath $LongtailLocation -ArgumentList $Arguments
+        $ExitCode = Invoke-External-PrintStdout -LiteralPath $LongtailLocation -ArgumentList $Arguments
         Write-Host "Completed Longtail process"
 
         if ($ExitCode -ne 0) {
