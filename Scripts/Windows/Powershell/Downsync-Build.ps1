@@ -71,7 +71,7 @@ function Downsync-Build {
 
         Write-Host "Beginning Longtail process"
         # Update local build version using Longtail
-        $ExitCode = Invoke-External -LiteralPath $LongtailLocation @$Arguments
+        $ExitCode = Invoke-External -LiteralPath $LongtailLocation -ArgumentList $Arguments
         Write-Host "Completed Longtail process"
 
         if ($ExitCode -ne 0) {

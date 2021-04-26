@@ -20,7 +20,7 @@ function Run-UAT {
 	
 	$RunUATArguments = $Arguments | Where { $_ -ne $null }
 
-	$ExitCode = Invoke-External -LiteralPath $RunUATLocation @$RunUATArguments
+	$ExitCode = Invoke-External -LiteralPath $RunUATLocation -ArgumentList $RunUATArguments
 	
 	if ($ExitCode -ne 0) {
 		throw [UATException]::new($ExitCode)
