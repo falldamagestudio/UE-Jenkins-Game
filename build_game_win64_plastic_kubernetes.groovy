@@ -6,7 +6,7 @@ pipeline {
 	    // The PVC must have been created beforehand, outside of Jenkins.
 	    // The PVC ensures that a persistent disk of a given size has been created.
 	    // It enables incremental builds.
-      workspaceVolume persistentVolumeClaimWorkspaceVolume(claimName: 'build-game-windows', readOnly: false)
+      workspaceVolume persistentVolumeClaimWorkspaceVolume(claimName: 'build-game-win64-plastic-kubernetes', readOnly: false)
 
       // Provisioning a new Windows node, fetching the Jenkins Agent image,
       //  fetching the MSVC build tools image, and starting the Jenkins agent is significantly slower
@@ -58,6 +58,11 @@ spec:
     value: "windows"
     effect: NoSchedule
 
+  volumes:
+    - name: plastic-config
+      secret:
+        secretName: plastic-config
+
   containers:
 
   - name: jnlp
@@ -69,6 +74,11 @@ spec:
     #  -- and this path should be less than 50 characters in total on Windows
     #  (or else building UE software will run into the 248/260 char path limits)
     workingDir: C:\\J
+
+    volumeMounts:
+      - name: plastic-config
+        mountPath: C:/plastic-config
+        readOnly: true
 
   - name: ue-jenkins-buildtools-windows
     image: ${UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE}
