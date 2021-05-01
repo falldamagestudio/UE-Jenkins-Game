@@ -1,4 +1,5 @@
 pipeline {
+
   agent {
     docker {
       // The entire job will run on one specific node
@@ -21,33 +22,51 @@ pipeline {
     }
   }
 
-  stages {
+  // Any programs that use the GCP Client Library (for example, Longtail) will by default use
+  //   the provided service account
+  // This makes behaviour identical between running on a GCE VM and a bare-metal host
+  //
+  // Besides, the GCP Client Library attempts to access the internal endpoint (169.254.169.254) to 
+  //   detect the VM identity -- and if run within a Docker container on a GCE VM, traffic to that location
+  //   does not work properly; the net result is that a program such as Longtail will hang indefinitely
+  //   if invoked within a Docker container on a GCE VM if GOOGLE_APPLICATION_CREDENTIALS is not set
+  //
+  // Reference: https://github.com/jenkinsci/google-oauth-plugin/issues/6#issuecomment-431424049
+  // Reference: https://cloud.google.com/docs/authentication/production#automatically
+  // Reference: https://jenkinsci.github.io/kubernetes-credentials-provider-plugin/examples/
 
-    stage('Update UE') {
-      steps {
-        powershell """
-          try {
-            & .\\Scripts\\Windows\\BuildSteps\\UpdateUE.ps1 -CloudStorageBucket ${LONGTAIL_STORE_BUCKET_NAME}
-          } catch {
-            Write-Error \$_
-            exit 1
-          }
-        """
+  withCredentials([[$class: 'FileBinding', credentialsId: 'build-job-gcp-service-account-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS']]) {
+
+    stages {
+
+      stage('Update UE') {
+        steps {
+          powershell """
+            try {
+              & .\\Scripts\\Windows\\BuildSteps\\UpdateUE.ps1 -CloudStorageBucket ${LONGTAIL_STORE_BUCKET_NAME}
+            } catch {
+              Write-Error \$_
+              exit 1
+            }
+          """
+        }
       }
-    }
-    
-    stage('Build game') {
-      steps {
-        powershell """
-          try {
-            & .\\Scripts\\Windows\\BuildSteps\\BuildGame.ps1 -ProjectLocation ExampleGame\\ExampleGame.uproject -TargetPlatform Win64 -Configuration Development -Target ExampleGame -ArchiveDir LocallyBuiltGame
-          } catch {
-            Write-Error \$_
-            exit 1
-          }
-        """
+      
+      stage('Build game') {
+        steps {
+          powershell """
+            try {
+              & .\\Scripts\\Windows\\BuildSteps\\BuildGame.ps1 -ProjectLocation ExampleGame\\ExampleGame.uproject -TargetPlatform Win64 -Configuration Development -Target ExampleGame -ArchiveDir LocallyBuiltGame
+            } catch {
+              Write-Error \$_
+              exit 1
+            }
+          """
+        }
       }
+
     }
 
   }
+
 }
