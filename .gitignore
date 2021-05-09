@@ -18,6 +18,7 @@
 # Ignore file which contains locally-installed engine version
 
 /installed-engine-version-win64.json
+/installed-engine-version-linux.json
 
 # Ignore build output from BuildGame script
 
