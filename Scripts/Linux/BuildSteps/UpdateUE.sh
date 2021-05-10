@@ -10,6 +10,6 @@ BuildVersion=$(if [ -f "${DesiredVersionLocation}" ]; then cat "${DesiredVersion
 UELocation="${ScriptRoot}/../../../UE"
 CloudStorageLocation="gs://${CloudStorageBucket}/engine-linux"
 LongtailCacheLocation="${ScriptRoot}/../../../LongtailCache"
-InstalledVersionLocation="${ScriptRoot}/../../../installed-engine-version-win64.json"
+InstalledVersionLocation="${ScriptRoot}/../../../installed-engine-version-linux.json"
 
 "${ScriptRoot}/../Shell/Downsync-EngineBuild.sh" "$UELocation" "$CloudStorageLocation" "$BuildVersion" "$LongtailCacheLocation" "$InstalledVersionLocation"
