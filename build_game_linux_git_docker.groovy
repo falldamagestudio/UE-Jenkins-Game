@@ -44,7 +44,7 @@ pipeline {
     stage('Build game') {
       steps {
         sh """
-            ./Scripts/Linux/BuildSteps/BuildGame.sh ExampleGame/ExampleGame.uproject Win64 Development ExampleGame LocallyBuiltGame
+            ./Scripts/Linux/BuildSteps/BuildGame.sh $(realpath ./ExampleGame/ExampleGame.uproject) Linux Development ExampleGame $(realpath ./LocallyBuiltGame)
         """
       }
     }
