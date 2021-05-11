@@ -24,6 +24,10 @@
 
 /LocallyBuiltGame
 
+# Ignore build logs
+
+/Logs
+
 # Ignore Visual Studio files/folders
 
 *\.vs*
