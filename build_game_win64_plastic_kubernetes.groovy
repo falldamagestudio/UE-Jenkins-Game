@@ -2,11 +2,8 @@ pipeline {
   agent {
     kubernetes { 
 
-      // The given PersistentVolumeClaim will be mounted where the workspace folder typically is located.
-	    // The PVC must have been created beforehand, outside of Jenkins.
-	    // The PVC ensures that a persistent disk of a given size has been created.
-	    // It enables incremental builds.
-      workspaceVolume persistentVolumeClaimWorkspaceVolume(claimName: 'build-game-win64-plastic-kubernetes', readOnly: false)
+      // Use of Plastic is not compatible with persistent workspaces on Kubernetes:
+      // The Plastic client wants to store some state outside of the workspace.
 
       // Provisioning a new Windows node, fetching the Jenkins Agent image,
       //  fetching the MSVC build tools image, and starting the Jenkins agent is significantly slower
