@@ -3,10 +3,15 @@ pipeline {
   agent {
     docker {
       // The entire job will run on one specific node
-      label 'build-game-linux-git-docker'
+      label 'build-game-win64-plastic-static'
 
       // All steps will be performed within this container
-      image env.UE_JENKINS_BUILDTOOLS_LINUX_IMAGE
+      image env.UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE
+
+      // Use a specific workspace folder, with a shorter folder name (Jenkins will default to C:\J\workspace\build_engine_windows_docker).
+      // Building UE results in some long paths, and paths longer than 260 characters are problematic under Windows.
+      // This shorter custom workspace name minimizes the risk that we'll run into too-long path names.
+      customWorkspace "C:\\W\\Game-Win64"
     }
   }
 
@@ -34,8 +39,14 @@ pipeline {
         // Reference: https://jenkinsci.github.io/kubernetes-credentials-provider-plugin/examples/
 
         withCredentials([[$class: 'FileBinding', credentialsId: 'build-job-gcp-service-account-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS']]) {
-          sh """
-              ./Scripts/Linux/BuildSteps/UpdateUE.sh ${LONGTAIL_STORE_BUCKET_NAME}
+
+          powershell """
+            try {
+              & .\\Scripts\\Windows\\BuildSteps\\UpdateUE.ps1 -CloudStorageBucket ${LONGTAIL_STORE_BUCKET_NAME}
+            } catch {
+              Write-Error \$_
+              exit 1
+            }
           """
         }
       }
@@ -43,16 +54,14 @@ pipeline {
       
     stage('Build game') {
       steps {
-        script {
-            sh "rm -rf Logs"
+        powershell """
           try {
-            sh """
-                ./Scripts/Linux/BuildSteps/BuildGame.sh \$(realpath ./ExampleGame/ExampleGame.uproject) Linux Development ExampleGame \$(realpath ./LocallyBuiltGame) \$(realpath ./Logs)
-            """
-          } finally {
-            archiveArtifacts 'Logs/**/*'
+            & .\\Scripts\\Windows\\BuildSteps\\BuildGame.ps1 -ProjectLocation ExampleGame\\ExampleGame.uproject -TargetPlatform Win64 -Configuration Development -Target ExampleGame -ArchiveDir LocallyBuiltGame
+          } catch {
+            Write-Error \$_
+            exit 1
           }
-        }
+        """
       }
     }
 
