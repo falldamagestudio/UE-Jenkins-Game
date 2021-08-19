@@ -1,12 +1,9 @@
 pipeline {
 
   agent {
-    docker {
+    node {
       // The entire job will run on one specific node
       label 'build-game-win64-git-dynamic'
-
-      // All steps will be performed within this container
-      image env.UE_JENKINS_BUILDTOOLS_WINDOWS_IMAGE
 
       // Use a specific workspace folder, with a shorter folder name (Jenkins will default to C:\J\workspace\build_engine_windows_docker).
       // Building UE results in some long paths, and paths longer than 260 characters are problematic under Windows.
