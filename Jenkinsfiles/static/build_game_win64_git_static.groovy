@@ -8,7 +8,7 @@ pipeline {
       // Use a specific workspace folder, with a shorter folder name (Jenkins will default to C:\J\workspace\build_engine_windows_docker).
       // Building UE results in some long paths, and paths longer than 260 characters are problematic under Windows.
       // This shorter custom workspace name minimizes the risk that we'll run into too-long path names.
-      customWorkspace "C:\\W\\Game-Win64"
+      customWorkspace "C:\\W\\Game-Win64-Git"
     }
   }
 
