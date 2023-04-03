@@ -32,19 +32,16 @@ if [ "${InstalledVersion}" != "${BuildVersion}" ]; then
     fi
 
     LongtailLocation="${ScriptRoot}/longtail-linux-x64"
-    VersionIndexURI="${CloudStorageLocation}/index/${BuildVersion}.lvi"
-    StorageURI="${CloudStorageLocation}/storage"
+    VersionJsonURI="${CloudStorageLocation}/${BuildVersion}.json"
 
     echo "Beginning Longtail process"
 
     "${LongtailLocation}" \
-        "downsync" \
+        "get" \
         "--source-path" \
-        $VersionIndexURI \
+        $VersionJsonURI \
         "--target-path" \
         $BuildLocation \
-        "--storage-uri" \
-        $StorageURI \
         "--cache-path" \
         $CacheLocation
 

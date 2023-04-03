@@ -42,17 +42,14 @@ function Downsync-Build {
 
         $LongtailLocation = "${PSScriptRoot}\longtail-win32-x64.exe"
         $BuildAbsoluteLocation = "\\?\$(Resolve-Path ${BuildLocation} -ErrorAction Stop)"
-        $VersionIndexURI = "${CloudStorageLocation}/index/${BuildVersion}.lvi"
-        $StorageURI = "${CloudStorageLocation}/storage"
+        $VersionJsonURI = "${CloudStorageLocation}/${BuildVersion}.json"
 
         $Arguments = @(
             "downsync"
             "--source-path"
-            $VersionIndexURI
+            $VersionJsonURI
             "--target-path"
             $BuildAbsoluteLocation
-            "--storage-uri"
-            $StorageURI
             "--cache-path"
             $CacheLocation
         )
