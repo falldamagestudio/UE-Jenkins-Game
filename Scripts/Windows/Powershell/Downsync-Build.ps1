@@ -45,7 +45,7 @@ function Downsync-Build {
         $VersionJsonURI = "${CloudStorageLocation}/${BuildVersion}.json"
 
         $Arguments = @(
-            "downsync"
+            "get"
             "--source-path"
             $VersionJsonURI
             "--target-path"
